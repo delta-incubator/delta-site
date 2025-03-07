@@ -1,0 +1,34 @@
+---
+import Layout from "@components/layouts/Layout.astro";
+import {
+  ArticleVideoSection,
+  ChartSection,
+  ContributeSection,
+  HeroSection,
+  LatestVideosSection,
+  MaintainersSection,
+  TwitchSection,
+} from "@components/pages/Community";
+import AnnouncementSection from "@components/pages/shared/AnnouncementSection.astro";
+import { BookDownloadSection } from "@components/pages/shared/BookDownloadSection";
+import { ContributorsSection } from "@components/pages/shared/ContributorsSection";
+import { ProjectGovernanceSection } from "@components/pages/shared/ProjectGovernanceSection";
+---
+
+<Layout title="Join the Delta Lake Community">
+  <HeroSection />
+  <AnnouncementSection
+    title="Check out Last Week in a Byte newsletter"
+    description="for the latest Delta events...a week late!"
+    url="http://go.delta.io/lastweek"
+  />
+  <LatestVideosSection />
+  <TwitchSection />
+  <ChartSection />
+  <ContributeSection />
+  <ArticleVideoSection />
+  <BookDownloadSection />
+  <MaintainersSection />
+  <ContributorsSection className="bg-lightBg" />
+  <ProjectGovernanceSection />
+</Layout>

@@ -1,0 +1,30 @@
+---
+/*
+ * Blog authors index page template
+ *
+ * Lists all of the blog authors.
+ */
+import { getCollection } from "astro:content";
+import Layout from "@components/layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Typography from "@components/Typography.astro";
+
+const profiles = await getCollection("profiles");
+
+// Sort alphabetically
+profiles.sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+
+<Layout title="Profiles">
+  <Section padding="xxl" title="Profiles">
+    <Typography variant="ul">
+      {
+        profiles.map((profile) => (
+          <li>
+            <a href={`/profiles/${profile.id}`}>{profile.data.name}</a>
+          </li>
+        ))
+      }
+    </Typography>
+  </Section>
+</Layout>

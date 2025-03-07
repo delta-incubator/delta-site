@@ -1,0 +1,209 @@
+---
+import "@pagefind/default-ui/css/ui.css";
+import Icon from "@components/Icon.astro";
+import Modal from "@components/Modal.astro";
+import Typography from "@components/Typography.astro";
+import HeaderButton from "./HeaderButton.astro";
+---
+
+<search-container class="lg:flex-1" data-modal-id="search">
+  <HeaderButton
+    className="header-open-search-modal lg:flex lg:items-center lg:bg-darkBorder lg:border lg:border-darkBorder lg:w-full lg:text-left lg:px-sm lg:h-[32px] lg:rounded lg:text-[rgba(255,255,255,.75)] lg:hover:text-white lg:hover:border-white"
+  >
+    <Icon
+      icon="search"
+      alt=""
+      className="lg:mr-sm lg:w-[1.25em] lg:h-[1.25em]"
+    />
+    <div class="hidden lg:block">Search</div>
+    <kbd
+      class="hidden lg:block ml-auto rounded text-xs py-[0.125em] px-[0.5em] bg-[rgba(225,225,225,0.25)]"
+    >
+      <kbd>ctrl</kbd>
+      <kbd>K</kbd>
+    </kbd>
+  </HeaderButton>
+  <Modal id="search" hideCloseButton={!import.meta.env.DEV}>
+    {
+      import.meta.env.DEV ? (
+        <Typography variant="prose" className="text-center">
+          <p>To view search results, run a production build:</p>
+          <p>
+            <code class="text-white bg-darkBorder rounded px-sm py-xs ml-sm">
+              $ pnpm build && pnpm preview
+            </code>
+          </p>
+        </Typography>
+      ) : (
+        <div id="pagefind-ui" />
+      )
+    }
+  </Modal>
+</search-container>
+<style>
+  kbd {
+    font-family: theme(fontFamily.sans) !important;
+  }
+</style>
+<style is:global>
+  /*
+   * Pagefind UI - Global
+   */
+  #pagefind-ui .pagefind-ui {
+    color: inherit;
+  }
+
+  /*
+   * Pagefind UI - Search
+   */
+
+  #pagefind-ui .pagefind-ui__search-input {
+    background-color: theme(colors.darkBorder);
+    border: theme(colors.darkBorder);
+    color: white;
+  }
+  #pagefind-ui .pagefind-ui__form::before {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+  #pagefind-ui .pagefind-ui__search-input:focus {
+    background-color: rgba(255, 255, 255, 0.125);
+    border-color: white;
+  }
+  #pagefind-ui .pagefind-ui__search-input:focus::before {
+    background-color: white !important;
+  }
+  #pagefind-ui .pagefind-ui__search-input::placeholder {
+    opacity: 1;
+    color: rgba(255, 255, 255, 0.75);
+  }
+  #pagefind-ui .pagefind-ui__search-clear {
+    display: none;
+  }
+
+  /*
+   * Pagefind UI - Results
+   */
+  #pagefind-ui .pagefind-ui__message {
+    font-size: theme(fontSize.secondary);
+    color: rgba(255, 255, 255, 0.75);
+  }
+  #pagefind-ui .pagefind-ui__result {
+    border: none;
+    background-color: theme(colors.darkBorder);
+    padding: theme(spacing.md);
+    border-radius: theme(borderRadius.md);
+  }
+  #pagefind-ui .pagefind-ui__result + .pagefind-ui__result {
+    margin-top: theme(spacing.sm);
+  }
+  #pagefind-ui .pagefind-ui__result-inner {
+    margin-top: 0;
+  }
+  #pagefind-ui .pagefind-ui__result-title {
+    font-size: theme(fontSize.primary);
+  }
+  #pagefind-ui .pagefind-ui__result-title .pagefind-ui__result-link {
+    color: inherit;
+  }
+  #pagefind-ui .pagefind-ui__result-excerpt {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: theme(fontSize.secondary);
+  }
+  #pagefind-ui .pagefind-ui__result mark {
+    background-color: transparent;
+    color: white;
+    font-weight: theme(fontWeight.bold);
+  }
+  #pagefind-ui .pagefind-ui__result-nested {
+    width: 100%;
+    margin-top: theme(spacing.sm);
+    padding-top: theme(spacing.sm);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  #pagefind-ui .pagefind-ui__button {
+    background-color: transparent;
+    color: inherit;
+    border: 2px solid theme(colors.darkBorder);
+  }
+  #pagefind-ui .pagefind-ui__button:hover,
+  #pagefind-ui .pagefind-ui__button:focus {
+    border-color: white;
+  }
+</style>
+<script is:inline>
+  (() => {
+    const openBtn = document.querySelector(".header-open-search-modal");
+    const shortcut = openBtn?.querySelector("kbd");
+    if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+    const platformKey = shortcut.querySelector("kbd");
+    if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+      platformKey.textContent = "⌘";
+      openBtn.setAttribute("aria-keyshortcuts", "Meta+K");
+    }
+    shortcut.style.display = "";
+  })();
+</script>
+<script>
+  class SearchContainer extends HTMLElement {
+    isModalOpen() {
+      const modalId = this.dataset.modalId;
+      const modal = this.querySelector(`#${modalId}`);
+
+      return modal.open;
+    }
+
+    openModal() {
+      const modalId = this.dataset.modalId;
+      const modal = this.querySelector(`#${modalId}`);
+
+      modal.showModal();
+    }
+
+    closeModal() {
+      const modalId = this.dataset.modalId;
+      const modal = this.querySelector(`#${modalId}`);
+
+      modal.close();
+    }
+
+    connectedCallback() {
+      const button = this.querySelector(".header-open-search-modal");
+
+      button.addEventListener("click", () => {
+        this.openModal();
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if ((e.metaKey === true || e.ctrlKey === true) && e.key === "k") {
+          if (this.isModalOpen()) {
+            this.closeModal();
+          } else {
+            this.openModal();
+          }
+
+          e.preventDefault();
+        }
+      });
+
+      window.addEventListener("DOMContentLoaded", async () => {
+        if (import.meta.env.DEV) return;
+        const onIdle =
+          window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+        onIdle(async () => {
+          // @ts-expect-error — Missing types for @pagefind/default-ui package.
+          const { PagefindUI } = await import("@pagefind/default-ui");
+
+          new PagefindUI({
+            element: "#pagefind-ui",
+            baseUrl: import.meta.env.BASE_URL,
+            bundlePath:
+              import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
+            showImages: false,
+          });
+        });
+      });
+    }
+  }
+
+  customElements.define("search-container", SearchContainer);
+</script>

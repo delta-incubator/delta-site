@@ -1,0 +1,22 @@
+---
+import { site } from "@config/site";
+import { fetchChannelVideos } from "@utils/fetchYoutube";
+import ImageStrip from "../shared/ImageStrip.astro";
+import Section from "@components/Section.astro";
+
+const { youtubeChannelId } = site;
+const videos = await fetchChannelVideos(youtubeChannelId, { limit: 5 });
+---
+
+<Section title="Scheduled and Latest Videos" padding="xl" isHeaderCentered>
+  <ImageStrip
+    items={videos.map((video) => {
+      return {
+        title: video.title,
+        url: video.permalink,
+        thumbnail: video.thumbnail.url,
+      };
+    })}
+    columns={5}
+  />
+</Section>
