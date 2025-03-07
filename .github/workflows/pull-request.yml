@@ -1,0 +1,54 @@
+name: Pull request workflow
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    name: Linting and formatting checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install
+      - run: pnpm lint
+      - run: pnpm format
+  changes:
+    name: Determine list of packages that changed
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      packages: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            plugin-docs: packages/plugin-docs/**
+            delta-docs: sites/delta-docs/**
+            delta-site: sites/delta-site/**
+  test:
+    name: Run tests for each package
+    needs: changes
+    strategy:
+      matrix:
+        # Parse JSON array containing names of all filters matching any of changed files
+        # e.g. ['plugin-docs', 'delta-docs'] if both package folders contains changes
+        package: ${{ fromJSON(needs.changes.outputs.packages) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install
+      - run: pnpm --filter ${{ matrix.package }} test:ci
