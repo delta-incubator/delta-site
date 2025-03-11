@@ -1,11 +1,11 @@
 ---
 title: Delta Lake 3.3
-description: We are pleased to announce the release of Delta Lake 3.3 on Apache Spark 3.5, with features that improve the performance and interoperability of Delta Lake.
+description: Announcing Delta Lake 3.3 on Apache Spark 3.5, with features that improve the performance and interoperability of Delta Lake.
 thumbnail: "./thumbnail.png"
 author:
   - allisonportis
   - susan-pierce
-publishedAt: 2024-01-15
+publishedAt: 2025-01-15
 ---
 
 We are pleased to announce the release of Delta Lake 3.3 ([release notes]) on Apache Spark 3.5.3,
