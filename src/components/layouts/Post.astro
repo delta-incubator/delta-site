@@ -5,6 +5,7 @@ import type { CollectionEntry } from "astro:content";
 import Layout from "./Layout.astro";
 import Section from "@components/Section.astro";
 import Typography from "@components/Typography.astro";
+import LinkedInLogo from "@components/assets/linkedin-logo.svg";
 
 interface Props {
   post: CollectionEntry<"blog" | "userStories">;
@@ -43,8 +44,8 @@ const { post, authors, showLinkedinProfiles } = Astro.props;
             <>
               <Typography variant="h6" className="mt-xxl mb-md">
                 Follow our authors on{" "}
-                <img
-                  src="/images/linkedin-logo.svg"
+                <Image
+                  src={LinkedInLogo}
                   alt="LinkedIn"
                   class="inline h-[1em] leading-none mt-[-.15em] ml-[.15em]"
                 />

@@ -6,6 +6,7 @@ import Section from "@components/Section.astro";
 import Typography from "@components/Typography.astro";
 import heroDesktopImg from "./hero-desktop.png";
 import heroMobileImg from "./hero-mobile.png";
+import DeltaSharingLogo from "./delta-sharing-logo.svg";
 ---
 
 <Section
@@ -15,11 +16,12 @@ import heroMobileImg from "./hero-mobile.png";
   isHeaderCentered
   className="bg-white"
 >
-  <img
-    src="/images/delta-sharing-logo.svg"
+  <Image
+    src={DeltaSharingLogo}
     alt="Delta Sharing"
     class="sharing-logo"
     slot="title"
+    loading="eager"
   />
   <Typography variant="prose" slot="subtitle">
     <h3>An open standard for secure data sharing</h3>
@@ -53,7 +55,7 @@ import heroMobileImg from "./hero-mobile.png";
     </Grid>
   </Typography>
   <Image src={heroMobileImg} alt="" loading="lazy" class="img-mobile" />
-  <Image src={heroDesktopImg} alt="" loading="lazy" class="img-desktop" />
+  <Image src={heroDesktopImg} alt="" loading="eager" class="img-desktop" />
 </Section>
 <style>
   .sharing-logo {

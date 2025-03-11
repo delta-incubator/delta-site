@@ -5,6 +5,9 @@ import { Menu } from "./Menu";
 import Grid from "@components/Grid.astro";
 import Section from "@components/Section.astro";
 import Typography from "@components/Typography.astro";
+import DeltaLogo from "./assets/delta-lake-logo.svg";
+import LinuxFoundationLogo from "./assets/the-linux-foundation-projects.svg";
+import { Image } from "astro:assets";
 
 interface FooterMenu {
   title: string;
@@ -38,8 +41,8 @@ const menus: FooterMenu[] = [
       className="gap-y-lg lg:gap-x-xl"
     >
       <div>
-        <img
-          src="/images/delta-lake-logo.svg"
+        <Image
+          src={DeltaLogo}
           alt="Delta Lake"
           width="133"
           height="28"
@@ -71,8 +74,8 @@ const menus: FooterMenu[] = [
             https://lfprojects.org
           </a>.
         </Typography>
-        <img
-          src="/images/the-linux-foundation-logo.svg"
+        <Image
+          src={LinuxFoundationLogo}
           alt="The Linux Foundation"
           width="100"
           loading="lazy"
