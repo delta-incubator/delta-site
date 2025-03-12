@@ -15,6 +15,8 @@ const posts = await getCollection("blog");
 posts.sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
+
+return Astro.redirect("/blog/1");
 ---
 
 <Layout title="Delta Lake Blogs">
