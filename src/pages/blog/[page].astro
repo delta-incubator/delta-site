@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@components/layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import PostsList from "@components/pages/shared/PostsList.astro";
+import Icon from "@components/Icon.astro";
+import type { GetStaticPaths, Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection("blog");
+  const sortedPosts = posts.sort(
+    (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+  );
+  return paginate(sortedPosts, { pageSize: 12 });
+}) satisfies GetStaticPaths;
+
+type Props = {
+  page: Page<CollectionEntry<"blog">>;
+};
+
+const posts = await getCollection("blog");
+const latestPost = posts
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 1);
+
+const { page } = Astro.props;
+---
+
+<Layout title="Delta Lake Blogs">
+  <Section
+    title="Delta Lake Blogs"
+    isPrimary
+    padding="xxl"
+    className="bg-white"
+  >
+    <PostsList posts={latestPost} hasFeaturedItem />
+    <PostsList posts={page.data} />
+    <nav class="flex items-center justify-center gap-4 mt-8">
+      {
+        page.url.prev && (
+          <a
+            href={page.url.prev}
+            class="slider-prev slider-button left-[-10px] sm:left-[-1em]"
+          >
+            <Icon icon="chevronLeft" alt="Previous page" />
+          </a>
+        )
+      }
+      <p class="text-gray-600">Page {page.currentPage} of {page.lastPage}</p>
+      {
+        page.url.next && (
+          <a
+            href={page.url.next}
+            class="slider-next slider-button right-[-10px] sm:right-[-1em]"
+          >
+            <Icon icon="chevronRight" alt="Next page" />
+          </a>
+        )
+      }
+    </nav>
+  </Section>
+</Layout>

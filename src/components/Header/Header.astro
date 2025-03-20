@@ -5,13 +5,17 @@ import Icon from "@components/Icon.astro";
 import { Menu } from "../Menu";
 import HeaderButton from "./HeaderButton.astro";
 import Search from "./Search.astro";
+import DeltaLogo from "@components/assets/delta-lake-logo.svg";
+import LinuxFoundationLogo from "@components/assets/the-linux-foundation-projects.svg";
+import { Image } from "astro:assets";
 ---
 
 <Section className="tlf-banner">
-  <img
-    src="/images/the-linux-foundation-projects.svg"
+  <Image
+    src={LinuxFoundationLogo}
     alt="The Linux Foundation Projects"
     width="300"
+    loading="eager"
   />
 </Section>
 <Section background="dark" className="min-h-[48px] flex items-center">
@@ -20,11 +24,11 @@ import Search from "./Search.astro";
       <Icon icon="menu" alt="Open menu" />
     </HeaderButton>
     <a href="/" class="text-inherit font-bold no-underline leading-none">
-      <img
-        src="/images/delta-lake-logo.svg"
+      <Image
+        src={DeltaLogo}
         alt="Delta Lake"
-        width="133"
-        height="28"
+        width={133}
+        height={28}
         loading="eager"
       />
     </a>

@@ -2,7 +2,7 @@
 import { mapKeys } from "@utils/mapKeys";
 import { Image } from "astro:assets";
 import Section from "@components/Section.astro";
-import diagram from "./delta-uniform-hero-v4.png";
+import diagram from "./delta-uniform-hero-v5.png";
 
 interface Props {
   offsets: {
@@ -20,7 +20,7 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
 <Section className="section">
   <div class="diagram-container">
     <a href="/integrations">
-      <Image src={diagram} alt="Delta Lake Integrations" />
+      <Image src={diagram} alt="Delta Lake Integrations" loading="eager" />
     </a>
   </div>
 </Section>

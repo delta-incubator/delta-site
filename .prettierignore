@@ -3,3 +3,4 @@ public
 dist
 .astro
 pnpm-lock.yaml
+.env

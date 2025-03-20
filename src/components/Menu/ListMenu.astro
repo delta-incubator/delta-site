@@ -54,12 +54,24 @@ const itemClassNames = [
       if ("url" in item) {
         return (
           <li class={clsx(isNested && i > 0 && "mt-1")}>
-            <a href={item.url} class={clsx(itemClassNames)}>
+            <a
+              href={item.url}
+              class={clsx(itemClassNames)}
+              aria-label={isIconMenu ? item.label : ""}
+            >
               {item.icon && (
                 <Icon
                   icon={item.icon}
-                  alt={isIconMenu ? "" : item.label}
+                  alt=""
+                  Icon
+                  is
+                  decorative
+                  when
+                  label
+                  is
+                  visible
                   className={clsx({ "mr-[0.5em]": !isIconMenu })}
+                  aria-hidden={!isIconMenu}
                 />
               )}
               {(!item.icon || !isIconMenu) && item.label}
