@@ -21,7 +21,6 @@ export default defineConfig({
   image: {
     domains: [],
     formats: ["png", "jpg", "jpeg", "webp", "gif", "svg"],
-    serviceEntryPoint: "@astrojs/image/sharp",
   },
   integrations: [
     tailwind(),
