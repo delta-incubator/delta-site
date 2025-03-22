@@ -1,6 +1,6 @@
 ---
 title: Delta Lake Roadmap
-layout: ../components/layouts/Markdown.astro
+layout: "@theme/components/layouts/Markdown.astro"
 ---
 
 **[Roadmap of highest priority issues across the Delta Lake ecosystem](https://github.com/orgs/delta-io/projects/10/views/1)**

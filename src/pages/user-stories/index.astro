@@ -5,9 +5,9 @@
  * Lists all of the blog posts.
  */
 import { getCollection } from "astro:content";
-import Layout from "@components/layouts/Layout.astro";
-import Section from "@components/Section.astro";
-import PostsList from "@components/pages/shared/PostsList.astro";
+import Layout from "@theme/components/layouts/Layout.astro";
+import Section from "@theme/components/Section.astro";
+import PostsList from "@theme/components/pages/shared/PostsList.astro";
 
 const userStories = await getCollection("userStories");
 

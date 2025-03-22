@@ -1,6 +1,6 @@
 ---
 title: Contributing to Delta Lake
-layout: ../../components/layouts/Markdown.astro
+layout: "@theme/components/layouts/Markdown.astro"
 ---
 
 We happily welcome contributions to Delta Lake. We use [GitHub Issues](https://github.com/delta-io/delta/issues) to track community reported issues and [GitHub Pull Requests ](https://github.com/delta-io/delta/pulls) for accepting changes.

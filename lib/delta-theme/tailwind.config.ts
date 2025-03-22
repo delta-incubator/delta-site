@@ -1,4 +1,8 @@
 import type { Config } from "tailwindcss";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const breakpoints = {
   sm: "576px",
@@ -8,7 +12,13 @@ const breakpoints = {
 };
 
 const config: Config = {
-  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  content: [
+    // Theme components
+    `${path.resolve(__dirname, "./components")}/**/*.astro`,
+
+    // Astro project "src" folder -- for custom styles
+    "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
+  ],
   theme: {
     extend: {
       /*
