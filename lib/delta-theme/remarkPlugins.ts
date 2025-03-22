@@ -59,4 +59,4 @@ const noteDirective: RemarkPlugin = () => {
   };
 };
 
-export const remarkCustomDirectives = [remarkDirective, noteDirective];
+export const remarkPlugins = [remarkDirective, noteDirective];

@@ -1,7 +1,6 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
-import { remarkCustomDirectives } from "./lib/remarkCustomDirectives";
-import { deltaTheme } from "./lib/delta-theme";
+import { deltaTheme, remarkPlugins } from "./lib/delta-theme";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,7 +13,7 @@ export default defineConfig({
     validateSecrets: true,
   },
   markdown: {
-    remarkPlugins: [...remarkCustomDirectives],
+    remarkPlugins,
   },
   image: {
     domains: [],
