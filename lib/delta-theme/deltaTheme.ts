@@ -15,8 +15,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const deltaTheme = (config: ThemeConfig): AstroIntegration[] => {
   const { name } = config;
 
-  console.log(path.resolve(__dirname, "./tailwind.config.ts"));
-
   return [
     tailwind({
       configFile: path.resolve(__dirname, "./tailwind.config.ts"),
