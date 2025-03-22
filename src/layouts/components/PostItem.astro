@@ -1,11 +1,11 @@
 ---
 import { getEntries } from "astro:content";
 import { Image } from "astro:assets";
-import type { Post } from "@config/types";
+import type { Post } from "../../config/types";
 import { getPermalink } from "@utils/getPermalink";
 import clsx from "clsx";
-import Grid from "../../Grid.astro";
-import Typography from "../../Typography.astro";
+import Grid from "@theme/components/Grid.astro";
+import Typography from "@theme/components/Typography.astro";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {

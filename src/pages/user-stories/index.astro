@@ -7,7 +7,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Section from "@theme/components/Section.astro";
-import PostsList from "@theme/components/pages/shared/PostsList.astro";
+import PostsList from "../../layouts/components/PostsList.astro";
 
 const userStories = await getCollection("userStories");
 
