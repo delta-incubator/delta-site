@@ -3,9 +3,9 @@ import { spawn } from "node:child_process";
 import { dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const search = (): AstroIntegration => {
+export const searchPlugin = (): AstroIntegration => {
   return {
-    name: "search-plugin",
+    name: "delta-lake-search-plugin",
     hooks: {
       "astro:build:done": async ({ dir, logger }) => {
         if (import.meta.env.DEV) return;

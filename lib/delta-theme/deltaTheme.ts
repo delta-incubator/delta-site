@@ -2,7 +2,7 @@ import tailwind from "@astrojs/tailwind";
 import favicons from "astro-favicons";
 import type { AstroIntegration } from "astro";
 import path from "path";
-import { search } from "../search";
+import { searchPlugin } from "./searchPlugin";
 import { fileURLToPath } from "url";
 
 interface ThemeConfig {
@@ -21,7 +21,7 @@ export const deltaTheme = (config: ThemeConfig): AstroIntegration[] => {
     tailwind({
       configFile: path.resolve(__dirname, "./tailwind.config.ts"),
     }),
-    search(),
+    searchPlugin(),
     favicons({
       name,
       short_name: name,
