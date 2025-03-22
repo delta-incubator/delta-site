@@ -28,7 +28,7 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
       )}
       data-close-modal
     >
-      <Icon icon="close" aria-label="Close modal" />
+      <Icon icon="close" alt="Close modal" />
     </button>
     <slot />
   </dialog-container>
@@ -120,19 +120,25 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
 </style>
 <script>
   class DialogContainer extends HTMLElement {
-    connectedCallback() {
-      const modalId = this.dataset.id;
-      const closeButton = this.querySelector("button[data-close-modal]");
-      const modal = document.querySelector(`#${modalId}`);
+    #modal: HTMLDialogElement | null = null;
+    #closeButton: HTMLButtonElement | null = null;
 
-      closeButton.addEventListener("click", () => {
-        modal.close();
+    constructor() {
+      super();
+
+      const modalId = this.dataset.id;
+      this.#modal = document.querySelector(`#${modalId}`);
+      this.#closeButton = this.querySelector("button[data-close-modal]");
+    }
+
+    connectedCallback() {
+      this.#closeButton?.addEventListener("click", () => {
+        this.#modal?.close();
       });
 
-      modal.addEventListener("mousedown", (event) => {
-        console.log(event);
+      this.#modal?.addEventListener("mousedown", (event) => {
         if (event.target === event.currentTarget) {
-          modal.close();
+          this.#modal?.close();
         }
       });
     }

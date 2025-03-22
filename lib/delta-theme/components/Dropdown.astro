@@ -22,17 +22,24 @@ const { label, toggleClassName } = Astro.props;
 </dropdown-container>
 <script>
   class Dropdown extends HTMLElement {
-    connectedCallback() {
-      const button = this.querySelector("[data-toggle]");
-      const container = this.querySelector("[data-container]");
+    #button: HTMLButtonElement | null = null;
+    #container: HTMLElement | null = null;
 
-      button?.addEventListener("click", () => {
-        if (button.getAttribute("aria-expanded") === "true") {
-          button.setAttribute("aria-expanded", "false");
-          container?.classList.replace("block", "hidden");
+    constructor() {
+      super();
+
+      this.#button = this.querySelector("[data-toggle]");
+      this.#container = this.querySelector("[data-container]");
+    }
+
+    connectedCallback() {
+      this.#button?.addEventListener("click", () => {
+        if (this.#button?.getAttribute("aria-expanded") === "true") {
+          this.#button?.setAttribute("aria-expanded", "false");
+          this.#container?.classList.replace("block", "hidden");
         } else {
-          button.setAttribute("aria-expanded", "true");
-          container?.classList.replace("hidden", "block");
+          this.#button?.setAttribute("aria-expanded", "true");
+          this.#container?.classList.replace("hidden", "block");
         }
       });
     }

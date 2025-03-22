@@ -136,18 +136,20 @@ import { Image } from "astro:assets";
     }
 
     connectedCallback() {
-      this.#openButton.addEventListener("click", () => this.#toggleMenu());
-      this.#closeButton.addEventListener("click", () => this.#toggleMenu());
-      this.#backdrop.addEventListener("click", () => this.#toggleMenu());
+      this.#openButton?.addEventListener("click", () => this.#toggleMenu());
+      this.#closeButton?.addEventListener("click", () => this.#toggleMenu());
+      this.#backdrop?.addEventListener("click", () => this.#toggleMenu());
     }
 
     #toggleMenu() {
-      const state = this.#menuWrapper.dataset.toggled;
+      if (this.#menuWrapper) {
+        const state = this.#menuWrapper.dataset.toggled;
 
-      if (state === "true") {
-        this.#menuWrapper.dataset.toggled = "false";
-      } else {
-        this.#menuWrapper.dataset.toggled = "true";
+        if (state === "true") {
+          this.#menuWrapper.dataset.toggled = "false";
+        } else {
+          this.#menuWrapper.dataset.toggled = "true";
+        }
       }
     }
   }

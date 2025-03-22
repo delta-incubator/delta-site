@@ -82,16 +82,29 @@ const sliderColumnAttributes = Object.entries(columnSizes).reduce(
 </grid-slider>
 <script>
   class Slider extends HTMLElement {
+    #track: HTMLElement | null = null;
+    #nextButton: HTMLElement | null = null;
+    #prevButton: HTMLElement | null = null;
+
+    constructor() {
+      super();
+
+      this.#track = this.querySelector(".slider-track");
+      this.#nextButton = this.querySelector(".slider-next");
+      this.#prevButton = this.querySelector(".slider-prev");
+    }
+
     connectedCallback() {
       const { itemsCount, columnsXs, columnsSm, columnsLg } = this.dataset;
-      const track = this.querySelector<HTMLElement>(".slider-track");
-
-      if (!track || !itemsCount || !columnsXs || !columnsSm || !columnsLg) {
+      if (
+        !this.#track ||
+        !itemsCount ||
+        !columnsXs ||
+        !columnsSm ||
+        !columnsLg
+      ) {
         return;
       }
-
-      const nextButton = this.querySelector(".slider-next");
-      const prevButton = this.querySelector(".slider-prev");
 
       let currentIndex = 0;
       let columns: number;
@@ -117,29 +130,31 @@ const sliderColumnAttributes = Object.entries(columnSizes).reduce(
       const updateSlidePosition = () => {
         calculateColumns();
 
-        track.style.transform = `translateX(calc(-${100 * currentIndex}% - ${1.875 * currentIndex}rem))`;
+        if (this.#track) {
+          this.#track.style.transform = `translateX(calc(-${100 * currentIndex}% - ${1.875 * currentIndex}rem))`;
+        }
 
         if (currentIndex === 0) {
-          prevButton?.setAttribute("disabled", "disabled");
+          this.#prevButton?.setAttribute("disabled", "disabled");
         } else {
-          prevButton?.removeAttribute("disabled");
+          this.#prevButton?.removeAttribute("disabled");
         }
 
         if (currentIndex < totalSlides - 1) {
-          nextButton?.removeAttribute("disabled");
+          this.#nextButton?.removeAttribute("disabled");
         } else {
-          nextButton?.setAttribute("disabled", "disabled");
+          this.#nextButton?.setAttribute("disabled", "disabled");
         }
       };
 
-      prevButton?.addEventListener("click", () => {
+      this.#prevButton?.addEventListener("click", () => {
         if (currentIndex > 0) {
           currentIndex--;
           updateSlidePosition();
         }
       });
 
-      nextButton?.addEventListener("click", () => {
+      this.#nextButton?.addEventListener("click", () => {
         if (currentIndex < totalSlides - 1) {
           currentIndex++;
           updateSlidePosition();

@@ -145,31 +145,31 @@ import HeaderButton from "./HeaderButton.astro";
 </script>
 <script>
   class SearchContainer extends HTMLElement {
-    isModalOpen() {
-      const modalId = this.dataset.modalId;
-      const modal = this.querySelector(`#${modalId}`);
+    #modal: HTMLDialogElement | null = null;
+    #button: HTMLButtonElement | null = null;
 
-      return modal.open;
+    constructor() {
+      super();
+
+      const modalId = this.dataset.modalId;
+      this.#modal = this.querySelector(`#${modalId}`);
+      this.#button = this.querySelector(".header-open-search-modal");
+    }
+
+    isModalOpen() {
+      return this.#modal?.open;
     }
 
     openModal() {
-      const modalId = this.dataset.modalId;
-      const modal = this.querySelector(`#${modalId}`);
-
-      modal.showModal();
+      this.#modal?.showModal();
     }
 
     closeModal() {
-      const modalId = this.dataset.modalId;
-      const modal = this.querySelector(`#${modalId}`);
-
-      modal.close();
+      this.#modal?.close();
     }
 
     connectedCallback() {
-      const button = this.querySelector(".header-open-search-modal");
-
-      button.addEventListener("click", () => {
+      this.#button?.addEventListener("click", () => {
         this.openModal();
       });
 
