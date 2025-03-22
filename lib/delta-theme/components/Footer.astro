@@ -1,5 +1,5 @@
 ---
-import { site } from "@config/site";
+import { config } from "virtual:delta-theme/config";
 import type { MenuItem } from "./Menu";
 import { Menu } from "./Menu";
 import Grid from "./Grid.astro";
@@ -17,19 +17,19 @@ interface FooterMenu {
 const menus: FooterMenu[] = [
   {
     title: "Delta Lake",
-    menu: site.menus.footerMain,
+    menu: config.menus.footerMain,
   },
   {
     title: "Learn",
-    menu: site.menus.footerLearn,
+    menu: config.menus.footerLearn,
   },
   {
     title: "Community",
-    menu: site.menus.footerCommunity,
+    menu: config.menus.footerCommunity,
   },
   {
     title: "Social Channels",
-    menu: site.menus.social,
+    menu: config.menus.social,
   },
 ];
 ---
