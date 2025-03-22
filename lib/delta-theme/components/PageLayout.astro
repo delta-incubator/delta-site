@@ -1,0 +1,76 @@
+---
+import { getImage } from "astro:assets";
+import { localizedHTML as favicons } from "astro-favicons/middleware";
+import { site } from "@config/site";
+import Footer from "./Footer.astro";
+import { Header } from "./Header";
+import "@fontsource/source-sans-pro/400.css";
+import "@fontsource/source-sans-pro/600.css";
+import "@fontsource-variable/source-code-pro";
+import GoogleAnalytics from "./pages/shared/GoogleAnalytics.astro";
+
+interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+  image?: string | Parameters<typeof getImage>[0]["src"] | undefined;
+}
+
+const { title, description, image } = Astro.props;
+const { title: siteTitle, googleAnalyticsId } = site;
+const imageUrl =
+  !image || typeof image === "string"
+    ? image
+    : (await getImage({ src: image })).src;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    {!import.meta.env.DEV && <GoogleAnalytics id={googleAnalyticsId} />}
+    <slot name="head-first" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title ? `${title} | ${siteTitle}` : siteTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <meta
+      name="image"
+      property="og:image"
+      content={new URL(
+        imageUrl ? imageUrl : "/images/default-thumbnail.png",
+        Astro.site,
+      )}
+    />
+    <Fragment set:html={favicons(Astro.currentLocale)} />
+    <slot name="head-last" />
+  </head>
+  <body class="font-default leading-base m-none bg-darkBg text-darkColor">
+    <slot name="body-first" />
+    <Header />
+    <main class="bg-lightBg text-lightColor">
+      <slot />
+    </main>
+    <Footer />
+    <slot name="body-last" />
+  </body>
+</html>
+<style>
+  body {
+    font-weight: theme(fontWeight.normal);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :global(a) {
+    color: theme(colors.link);
+    text-decoration: underline;
+  }
+
+  :global(.astro-code) {
+    padding: theme(spacing.sm);
+    font-weight: theme(fontWeight.code);
+    border-radius: 0.25rem;
+  }
+</style>

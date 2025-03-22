@@ -5,9 +5,9 @@
  * Lists all of the blog authors.
  */
 import { getCollection } from "astro:content";
-import Layout from "@components/layouts/Layout.astro";
-import Section from "@components/Section.astro";
-import Typography from "@components/Typography.astro";
+import Layout from "../../layouts/Layout.astro";
+import Section from "@theme/components/Section.astro";
+import Typography from "@theme/components/Typography.astro";
 
 const profiles = await getCollection("profiles");
 
