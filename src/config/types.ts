@@ -1,6 +1,3 @@
-import type { ComponentProps } from "astro/types";
-import Icon from "@theme/components/Icon.astro";
-
 /*
  * Collections
  */
@@ -13,25 +10,3 @@ export type Post = CollectionEntry<"blog" | "userStories">;
 export type PermalinkedCollection = CollectionEntry<
   "blog" | "userStories" | "profiles"
 >;
-
-/*
- * Compnoents
- */
-type IconType = ComponentProps<typeof Icon>["icon"];
-
-/*
- * Menus
- */
-interface SingleMenuItem {
-  label: string;
-  url: string;
-  icon?: IconType;
-}
-
-interface GroupMenuItem {
-  label: string;
-  items: SingleMenuItem[];
-  icon?: IconType;
-}
-
-export type MenuItem = SingleMenuItem | GroupMenuItem;

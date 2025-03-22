@@ -1,5 +1,5 @@
 ---
-import { site } from "@config/site";
+import { config } from "virtual:delta-theme/config";
 import Section from "../Section.astro";
 import Icon from "../Icon.astro";
 import { Menu } from "../Menu";
@@ -36,12 +36,12 @@ import { Image } from "astro:assets";
       <button type="button" class="header-close-menu">
         <Icon icon="close" alt="Close menu" />
       </button>
-      <Menu items={site.menus.header} theme="header" direction="horizontal" />
+      <Menu items={config.menus.header} theme="header" direction="horizontal" />
     </div>
     <Search />
     <div class="header-search-wrapper">
       <Menu
-        items={site.menus.social}
+        items={config.menus.social}
         theme="header"
         direction="horizontal"
         isIconMenu

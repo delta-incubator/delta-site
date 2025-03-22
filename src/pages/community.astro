@@ -13,6 +13,11 @@ import AnnouncementSection from "@theme/components/pages/shared/AnnouncementSect
 import { BookDownloadSection } from "@theme/components/pages/shared/BookDownloadSection";
 import { ContributorsSection } from "@theme/components/pages/shared/ContributorsSection";
 import { ProjectGovernanceSection } from "@theme/components/pages/shared/ProjectGovernanceSection";
+import { site } from "@config/site";
+import { fetchChannelVideos } from "@utils/fetchYoutube";
+
+const { youtubeChannelId } = site;
+const videos = await fetchChannelVideos(youtubeChannelId, { limit: 5 });
 ---
 
 <Layout title="Join the Delta Lake Community">
@@ -22,7 +27,7 @@ import { ProjectGovernanceSection } from "@theme/components/pages/shared/Project
     description="for the latest Delta events...a week late!"
     url="http://go.delta.io/lastweek"
   />
-  <LatestVideosSection />
+  <LatestVideosSection videos={videos} />
   <TwitchSection />
   <ChartSection />
   <ContributeSection />
