@@ -1,11 +1,18 @@
 ---
-import { site } from "@config/site";
-import { fetchChannelVideos } from "@utils/fetchYoutube";
 import ImageStrip from "../shared/ImageStrip.astro";
 import Section from "../../Section.astro";
 
-const { youtubeChannelId } = site;
-const videos = await fetchChannelVideos(youtubeChannelId, { limit: 5 });
+interface Props {
+  videos: {
+    title: string;
+    permalink: string;
+    thumbnail: {
+      url: string;
+    };
+  }[];
+}
+
+const { videos } = Astro.props;
 ---
 
 <Section title="Scheduled and Latest Videos" padding="xl" isHeaderCentered>
