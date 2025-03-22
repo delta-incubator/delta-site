@@ -1,6 +1,6 @@
 ---
 title: Community Meetings
-layout: "@theme/components/layouts/Markdown.astro"
+layout: ../../layouts/Markdown.astro
 ---
 
 This is the future location for the Community Meetings page.

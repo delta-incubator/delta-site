@@ -2,17 +2,17 @@
 import { getImage } from "astro:assets";
 import { localizedHTML as favicons } from "astro-favicons/middleware";
 import { site } from "@config/site";
-import Footer from "../Footer.astro";
-import { Header } from "../Header";
+import Footer from "./Footer.astro";
+import { Header } from "./Header";
 import "@fontsource/source-sans-pro/400.css";
 import "@fontsource/source-sans-pro/600.css";
 import "@fontsource-variable/source-code-pro";
-import GoogleAnalytics from "../pages/shared/GoogleAnalytics.astro";
+import GoogleAnalytics from "./pages/shared/GoogleAnalytics.astro";
 
 interface Props {
-  title?: string;
+  title?: string | undefined;
   description?: string | undefined;
-  image?: string | Parameters<typeof getImage>[0]["src"];
+  image?: string | Parameters<typeof getImage>[0]["src"] | undefined;
 }
 
 const { title, description, image } = Astro.props;
@@ -27,18 +27,7 @@ const imageUrl =
 <html lang="en">
   <head>
     {!import.meta.env.DEV && <GoogleAnalytics id={googleAnalyticsId} />}
-    {
-      !import.meta.env.DEV && (
-        // @ts-expect-error -- the "key" attribute is technically not valid
-        <script
-          is:inline
-          key="plausible-script"
-          defer
-          data-domain="delta.io"
-          src="https://plausible.io/js/script.js"
-        />
-      )
-    }
+    <slot name="head-first" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -56,13 +45,16 @@ const imageUrl =
       )}
     />
     <Fragment set:html={favicons(Astro.currentLocale)} />
+    <slot name="head-last" />
   </head>
   <body class="font-default leading-base m-none bg-darkBg text-darkColor">
+    <slot name="body-first" />
     <Header />
     <main class="bg-lightBg text-lightColor">
       <slot />
     </main>
     <Footer />
+    <slot name="body-last" />
   </body>
 </html>
 <style>

@@ -1,6 +1,6 @@
 ---
 title: Getting Started with Delta Lake
-layout: "@theme/components/layouts/Markdown.astro"
+layout: ../../layouts/Markdown.astro
 ---
 
 This guide helps you quickly explore the [main features](https://docs.delta.io/latest/delta-intro.html) of Delta Lake. It provides code snippets that show how to read from and write to Delta tables from interactive, batch, and streaming queries. It also demonstrates table updates and time travel.
