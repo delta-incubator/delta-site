@@ -180,14 +180,20 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
         if (
           this.#track === null ||
           this.#columnSizes === null ||
-          currentBreakpoint === null
+          currentBreakpoint === null ||
+          this.#container === null
         ) {
           // this shouldn't happen, but TS is complaining
           return;
         }
 
-        const { gapRem } = this.#columnSizes[currentBreakpoint];
-        this.#track.style.transform = `translateX(calc(-1 * (${slideWidth}px + ${gapRem}rem) * ${currentIndex}))`;
+        // Get the actual gap size in pixels
+        const computedStyle = window.getComputedStyle(this.#track);
+        const actualGap = parseFloat(computedStyle.columnGap || "0");
+        // Calculate total width including the actual gap
+        const totalWidth = slideWidth + actualGap;
+        const offset = currentIndex * totalWidth;
+        this.#track.style.transform = `translateX(-${offset}px)`;
 
         if (currentIndex === 0) {
           this.#prevButton?.setAttribute("disabled", "disabled");
