@@ -19,12 +19,25 @@ interface Props {
 
 const { items, columns = items.length, className } = Astro.props;
 
-const columnSizes = { xs: 1, sm: 2, lg: columns ?? items.length };
-const sliderColumnAttributes = Object.entries(columnSizes).reduce(
-  (attrs, [size, numColumns]) => {
+const maxColumns = columns ?? items.length;
+
+const gridColumnSizes = {
+  xs: { columns: 1, widthPct: 1, gapRem: 0 },
+  sm: { columns: 2, widthPct: 0.5, gapRem: 1.875 / 2 },
+  lg: {
+    columns: maxColumns,
+    widthPct: 1 / maxColumns,
+    gapRem: (1.875 * (maxColumns - 1)) / maxColumns,
+  },
+};
+
+const gridColumnRules = Object.entries(gridColumnSizes).reduce(
+  (cols, [breakpoint, { widthPct, gapRem }]) => {
     return {
-      ...attrs,
-      [`data-columns-${size}`]: numColumns,
+      ...cols,
+      [breakpoint]: [
+        `repeat(${items.length}, calc(${widthPct * 100}% - ${gapRem}rem))`,
+      ],
     };
   },
   {},
@@ -33,23 +46,17 @@ const sliderColumnAttributes = Object.entries(columnSizes).reduce(
 
 <grid-slider
   class="relative block"
-  data-items-count={items.length}
-  {...sliderColumnAttributes}
+  data-items={items.length}
+  data-column-sizes={JSON.stringify(gridColumnSizes)}
 >
   <div class="slider-container w-full overflow-hidden">
     <Grid
-      columns={{
-        xs: [`repeat(${items.length}, 100%)`],
-        sm: [`repeat(${items.length}, calc(50% - (1.875rem / 2)))`],
-        lg: [
-          `repeat(${items.length}, calc(${100 / columnSizes.lg}% - ${(1.875 * (items.length - 1)) / items.length}rem))`,
-        ],
-      }}
+      columns={gridColumnRules}
       className={clsx("slider-track gap-xl grid-flow-col", className)}
     >
       {
         items.map(({ title, thumbnail, url }) => (
-          <a href={url} class="thumbnail">
+          <a href={url} class="thumbnail" data-imagestrip-item>
             {typeof thumbnail === "string" ? (
               <span>
                 <img src={thumbnail} alt="" loading="lazy" />
@@ -81,10 +88,23 @@ const sliderColumnAttributes = Object.entries(columnSizes).reduce(
   </button>
 </grid-slider>
 <script>
+  type Breakpoint = "lg" | "sm" | "xs";
+
+  type ColumnSizesMap = Record<
+    Breakpoint,
+    {
+      columns: number;
+      widthPct: number;
+      gapRem: number;
+    }
+  >;
   class Slider extends HTMLElement {
     #track: HTMLElement | null = null;
     #nextButton: HTMLElement | null = null;
     #prevButton: HTMLElement | null = null;
+    #container: HTMLElement | null = null;
+    #itemsCount: number | null = null;
+    #columnSizes: ColumnSizesMap | null = null;
 
     constructor() {
       super();
@@ -92,47 +112,88 @@ const sliderColumnAttributes = Object.entries(columnSizes).reduce(
       this.#track = this.querySelector(".slider-track");
       this.#nextButton = this.querySelector(".slider-next");
       this.#prevButton = this.querySelector(".slider-prev");
+      this.#container = this.querySelector(".slider-container");
+      this.#itemsCount = this.dataset.items
+        ? parseInt(this.dataset.items, 10)
+        : null;
+      this.#columnSizes = this.dataset.columnSizes
+        ? JSON.parse(this.dataset.columnSizes)
+        : null;
+    }
+
+    getBreakpoint() {
+      const width = window.innerWidth;
+
+      if (width > 992) {
+        return "lg";
+      }
+
+      if (width > 576) {
+        return "sm";
+      }
+
+      return "xs";
     }
 
     connectedCallback() {
-      const { itemsCount, columnsXs, columnsSm, columnsLg } = this.dataset;
       if (
-        !this.#track ||
-        !itemsCount ||
-        !columnsXs ||
-        !columnsSm ||
-        !columnsLg
+        this.#track === null ||
+        this.#container === null ||
+        this.#columnSizes === null ||
+        this.#itemsCount === null
       ) {
         return;
       }
 
+      let currentBreakpoint: Breakpoint | null = null;
       let currentIndex = 0;
-      let columns: number;
-      let totalSlides: number;
+      let totalSlides = 0;
+      let slideWidth = 0;
 
       const calculateColumns = () => {
-        let newColumns: number;
-        if (window.innerWidth > 992) {
-          newColumns = parseInt(columnsLg);
-        } else if (window.innerWidth > 576) {
-          newColumns = parseInt(columnsSm);
-        } else {
-          newColumns = parseInt(columnsXs);
+        if (this.#columnSizes === null || this.#itemsCount === null) {
+          // this shouldn't happen, but TS is complaining
+          return;
         }
 
-        if (newColumns !== columns) {
+        const newBreakpoint = this.getBreakpoint();
+
+        if (newBreakpoint !== currentBreakpoint) {
+          currentBreakpoint = newBreakpoint;
           currentIndex = 0;
-          columns = newColumns;
-          totalSlides = Math.ceil(parseInt(itemsCount) / columns);
+
+          const { columns } = this.#columnSizes[newBreakpoint];
+          totalSlides = Math.ceil(this.#itemsCount / columns);
+
+          if (!this.#container) {
+            // this shouldn't happen, but TS is complaining
+            return;
+          }
+
+          slideWidth = this.#container.getBoundingClientRect().width;
         }
       };
 
       const updateSlidePosition = () => {
         calculateColumns();
 
-        if (this.#track) {
-          this.#track.style.transform = `translateX(calc(-${100 * currentIndex}% - ${1.875 * currentIndex}rem))`;
+        if (
+          this.#track === null ||
+          this.#columnSizes === null ||
+          currentBreakpoint === null ||
+          this.#container === null
+        ) {
+          // this shouldn't happen, but TS is complaining
+          return;
         }
+
+        // Get the actual gap size in pixels
+        const computedStyle = window.getComputedStyle(this.#track);
+        const actualGap = parseFloat(computedStyle.columnGap || "0");
+        // Calculate total width including the actual gap
+        const totalWidth = slideWidth + actualGap;
+        const offset = currentIndex * totalWidth;
+        this.#track.style.transform = `translateX(-${offset}px)`;
 
         if (currentIndex === 0) {
           this.#prevButton?.setAttribute("disabled", "disabled");
