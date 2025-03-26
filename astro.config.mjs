@@ -19,6 +19,10 @@ export default defineConfig({
     domains: [],
     formats: ["png", "jpg", "jpeg", "webp", "gif", "svg"],
   },
+  redirects: {
+    "/blog/1": "/blog",
+    "/user-stories/1": "/user-stories",
+  },
   integrations: [
     sitemap(),
     deltaTheme({
