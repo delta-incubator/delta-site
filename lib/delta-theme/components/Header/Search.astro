@@ -111,6 +111,14 @@ import HeaderButton from "./HeaderButton.astro";
   #pagefind-ui .pagefind-ui__result-excerpt {
     color: rgba(255, 255, 255, 0.75);
     font-size: theme(fontSize.secondary);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    contain: content;
+    will-change: transform;
+    max-height: 3em;
   }
   #pagefind-ui .pagefind-ui__result mark {
     background-color: transparent;
