@@ -46,7 +46,7 @@ export default defineConfig({
           { label: "Community", url: "/community" },
           {
             label: "Docs",
-            url: "https://delta-docs-staging.netlify.app/latest/",
+            url: "https://delta-docs-incubator.netlify.app/latest/",
           },
         ],
         footerMain: [

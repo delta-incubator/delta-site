@@ -24,6 +24,19 @@ const imageUrl =
 // Define paths that should be excluded from search
 const excludedPaths = ["/", "/blog", "/sharing"];
 
+// Determine content type based on URL path
+const getContentType = (pathname: string) => {
+  if (pathname.startsWith("/blog/")) return "Blog Post";
+  if (pathname.startsWith("/user-stories/")) return "User Story";
+  if (pathname.startsWith("/roadmap/")) return "Roadmap";
+  if (pathname.startsWith("/community/")) return "Community";
+  if (pathname.startsWith("/learn/")) return "Learning Material";
+  if (pathname.startsWith("/profiles/")) return "Profile";
+  return "Resources";
+};
+
+const contentType = getContentType(Astro.url.pathname);
+
 // Check if current path should be excluded
 const shouldExcludeFromSearch = excludedPaths.some(
   (path) =>
@@ -64,6 +77,9 @@ const shouldExcludeFromSearch = excludedPaths.some(
     <main
       class="bg-lightBg text-lightColor"
       {...shouldExcludeFromSearch && { "data-pagefind-ignore": "" }}
+      {...!shouldExcludeFromSearch && {
+        "data-pagefind-filter": `type:${contentType}`,
+      }}
     >
       <slot />
     </main>
