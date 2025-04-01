@@ -20,7 +20,15 @@ export const searchPlugin = (): AstroIntegration => {
         return new Promise<void>((resolve) => {
           spawn(
             "npx",
-            ["-y", "pagefind", ...loglevelFlag, "--site", relativeDir],
+            [
+              "-y",
+              "pagefind",
+              ...loglevelFlag,
+              "--site",
+              relativeDir,
+              "--exclude-selectors",
+              "[data-pagefind-ignore]",
+            ],
             {
               stdio: "inherit",
               shell: true,
@@ -33,7 +41,7 @@ export const searchPlugin = (): AstroIntegration => {
   };
 };
 
-/** Map the logging level of Astro’s logger to one of Pagefind’s logging level flags. */
+/** Map the logging level of Astro's logger to one of Pagefind's logging level flags. */
 function getPagefindLoggingFlags(
   level: AstroIntegrationLogger["options"]["level"],
 ) {
