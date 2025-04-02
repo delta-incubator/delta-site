@@ -18,6 +18,7 @@ import HeaderButton from "./HeaderButton.astro";
     <div class="hidden lg:block">Search</div>
     <kbd
       class="hidden lg:block ml-auto rounded text-xs py-[0.125em] px-[0.5em] bg-[rgba(225,225,225,0.25)]"
+      data-pagefind-ignore
     >
       <kbd>ctrl</kbd>
       <kbd>K</kbd>
@@ -59,15 +60,18 @@ import HeaderButton from "./HeaderButton.astro";
 
   #pagefind-ui .pagefind-ui__search-input {
     background-color: theme(colors.darkBorder);
-    border: theme(colors.darkBorder);
+    border: 1px solid theme(colors.darkBorder);
     color: white;
+    outline: none;
   }
   #pagefind-ui .pagefind-ui__form::before {
     background-color: rgba(255, 255, 255, 0.75);
   }
   #pagefind-ui .pagefind-ui__search-input:focus {
     background-color: rgba(255, 255, 255, 0.125);
-    border-color: white;
+    border: 1px solid white;
+    outline: 1px solid theme(colors.primary);
+    outline-offset: -2px;
   }
   #pagefind-ui .pagefind-ui__search-input:focus::before {
     background-color: white !important;
@@ -108,6 +112,14 @@ import HeaderButton from "./HeaderButton.astro";
   #pagefind-ui .pagefind-ui__result-excerpt {
     color: rgba(255, 255, 255, 0.75);
     font-size: theme(fontSize.secondary);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    contain: content;
+    will-change: transform;
+    max-height: 3em;
   }
   #pagefind-ui .pagefind-ui__result mark {
     background-color: transparent;
@@ -128,6 +140,16 @@ import HeaderButton from "./HeaderButton.astro";
   #pagefind-ui .pagefind-ui__button:hover,
   #pagefind-ui .pagefind-ui__button:focus {
     border-color: white;
+  }
+
+  #pagefind-ui {
+    max-height: calc(80vh - theme(spacing.lg) * 2);
+    overflow-y: auto;
+  }
+
+  #pagefind-ui .pagefind-ui__results {
+    overflow: visible;
+    position: static;
   }
 </style>
 <script is:inline>

@@ -20,6 +20,31 @@ const imageUrl =
   !image || typeof image === "string"
     ? image
     : (await getImage({ src: image })).src;
+
+// Define paths that should be excluded from search
+const excludedPaths = ["/", "/blog", "/sharing"];
+
+// Determine content type based on URL path
+const getContentType = (pathname: string) => {
+  if (pathname.startsWith("/blog/")) return "Blog Post";
+  if (pathname.startsWith("/user-stories/")) return "User Story";
+  if (pathname.startsWith("/roadmap/")) return "Roadmap";
+  if (pathname.startsWith("/community/")) return "Community";
+  if (pathname.startsWith("/learn/")) return "Learning Material";
+  if (pathname.startsWith("/profiles/")) return "Profile";
+  return "Resources";
+};
+
+const contentType = getContentType(Astro.url.pathname);
+
+// Check if current path should be excluded
+const shouldExcludeFromSearch = excludedPaths.some(
+  (path) =>
+    Astro.url.pathname === path ||
+    Astro.url.pathname.endsWith(path + "/") ||
+    // Exclude pagination pages like /blog/2/, /blog/3/, etc.
+    /^\/blog\/\d+\/?$/.test(Astro.url.pathname),
+);
 ---
 
 <!doctype html>
@@ -49,7 +74,13 @@ const imageUrl =
   <body class="font-default leading-base m-none bg-darkBg text-darkColor">
     <slot name="body-first" />
     <Header />
-    <main class="bg-lightBg text-lightColor">
+    <main
+      class="bg-lightBg text-lightColor"
+      {...shouldExcludeFromSearch && { "data-pagefind-ignore": "" }}
+      {...!shouldExcludeFromSearch && {
+        "data-pagefind-filter": `type:${contentType}`,
+      }}
+    >
       <slot />
     </main>
     <Footer />
