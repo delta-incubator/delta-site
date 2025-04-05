@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Mock } from "vitest";
+import { google } from "googleapis";
 import {
   fetchPlaylistVideos,
   fetchChannelPlaylists,
   fetchChannelVideos,
   fetchVideosByIds,
 } from "./fetchYoutube";
-import { google } from "googleapis";
 
 vi.mock("googleapis", () => {
   return {
