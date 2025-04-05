@@ -8,12 +8,6 @@
     "node": ">=22.14.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "test": "vitest",
-    "test:ci": "vitest run",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky"
@@ -28,20 +22,9 @@
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af",
-  "dependencies": {
-    "@astrojs/tailwind": "^6.0.1",
-    "@fontsource-variable/source-code-pro": "^5.1.1",
-    "@fontsource/source-sans-pro": "^5.1.0",
-    "astro": "^5.5.4",
-    "astro-favicons": "^3.1.5",
-    "googleapis": "^144.0.0",
-    "delta-theme": "workspace:*"
-  },
   "devDependencies": {
-    "@astrojs/sitemap": "^3.3.0",
     "@eslint/js": "^9.21.0",
     "@typescript-eslint/parser": "^8.26.0",
-    "clsx": "^2.1.1",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-astro": "^1.3.1",
@@ -51,8 +34,6 @@
     "lint-staged": "^15.4.3",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
-    "sharp": "^0.33.0",
-    "typescript-eslint": "^8.26.0",
-    "vitest": "^3.0.6"
+    "typescript-eslint": "^8.26.0"
   }
 }

@@ -12,6 +12,7 @@ export default [
       "**/dist",
       "**/.astro",
       "pnpm-lock.yaml",
+      "pnpm-workspace.yaml",
     ],
   },
   { files: ["**/*.{js,mjs,cjs,ts}"] },
