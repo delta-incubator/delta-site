@@ -1,0 +1,4 @@
+[build]
+  base = "."
+  publish = "delta-site/dist/"
+  command = "pnpm --filter delta-site build"
