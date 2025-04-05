@@ -16,7 +16,6 @@ const menuItem = z.union([singleMenuItem, groupedMenuItem]);
 
 export const configSchema = z.object({
   title: z.string(),
-  googleAnalyticsId: z.string().optional(),
   menus: z.object({
     header: z.array(menuItem),
     footerMain: z.array(menuItem),

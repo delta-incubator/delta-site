@@ -1,6 +1,8 @@
 ---
 import type { ComponentProps } from "astro/types";
+import { site } from "@config/site";
 import PageLayout from "@theme/components/PageLayout.astro";
+import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 
 type PageLayoutProps = ComponentProps<typeof PageLayout>;
 
@@ -17,14 +19,17 @@ const { title, description, image } = Astro.props;
   <Fragment name="head-first">
     {
       !import.meta.env.DEV && (
-        // @ts-expect-error -- the "key" attribute is technically not valid
-        <script
-          is:inline
-          key="plausible-script"
-          defer
-          data-domain="delta.io"
-          src="https://plausible.io/js/script.js"
-        />
+        <>
+          <GoogleAnalytics id={site.googleAnalyticsId} />
+          {/* @ts-expect-error -- the "key" attribute is technically not valid */}
+          <script
+            is:inline
+            key="plausible-script"
+            defer
+            data-domain="delta.io"
+            src="https://plausible.io/js/script.js"
+          />
+        </>
       )
     }
   </Fragment>

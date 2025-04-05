@@ -7,7 +7,6 @@ import { Header } from "./Header";
 import "@fontsource/source-sans-pro/400.css";
 import "@fontsource/source-sans-pro/600.css";
 import "@fontsource-variable/source-code-pro";
-import GoogleAnalytics from "./pages/shared/GoogleAnalytics.astro";
 
 interface Props {
   title?: string | undefined;
@@ -50,7 +49,6 @@ const shouldExcludeFromSearch = excludedPaths.some(
 <!doctype html>
 <html lang="en">
   <head>
-    {!import.meta.env.DEV && <GoogleAnalytics id={config.googleAnalyticsId} />}
     <slot name="head-first" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
