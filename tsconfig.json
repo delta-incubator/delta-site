@@ -5,7 +5,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
       "@config/*": ["src/config/*"],
       "@theme/*": ["lib/delta-theme/*"],
       "@utils/*": ["src/utils/*"]

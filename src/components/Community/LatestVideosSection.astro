@@ -1,0 +1,29 @@
+---
+import ImageStrip from "../shared/ImageStrip.astro";
+import Section from "@theme/components/Section.astro";
+
+interface Props {
+  videos: {
+    title: string;
+    permalink: string;
+    thumbnail: {
+      url: string;
+    };
+  }[];
+}
+
+const { videos } = Astro.props;
+---
+
+<Section title="Scheduled and Latest Videos" padding="xl" isHeaderCentered>
+  <ImageStrip
+    items={videos.map((video) => {
+      return {
+        title: video.title,
+        url: video.permalink,
+        thumbnail: video.thumbnail.url,
+      };
+    })}
+    columns={5}
+  />
+</Section>

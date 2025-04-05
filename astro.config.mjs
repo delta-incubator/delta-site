@@ -27,7 +27,6 @@ export default defineConfig({
     sitemap(),
     deltaTheme({
       title: "Delta Lake",
-      googleAnalyticsId: "GTM-P3C8QXQ",
       menus: {
         header: [
           { label: "Sharing", url: "/sharing" },
