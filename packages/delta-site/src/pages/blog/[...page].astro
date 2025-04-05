@@ -1,11 +1,11 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
 import Section from "delta-theme/components/Section.astro";
-import PostsList from "../../components/PostsList.astro";
 import type { GetStaticPaths, Page } from "astro";
 import type { CollectionEntry } from "astro:content";
 import Pagination from "delta-theme/components/Pagination.astro";
+import PostsList from "../../components/PostsList.astro";
+import Layout from "../../layouts/Layout.astro";
 
 export const sortBlogs = (
   a: CollectionEntry<"blog">,

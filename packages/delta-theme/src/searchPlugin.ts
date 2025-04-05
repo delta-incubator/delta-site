@@ -1,7 +1,7 @@
-import type { AstroIntegration, AstroIntegrationLogger } from "astro";
 import { spawn } from "node:child_process";
 import { dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import type { AstroIntegration, AstroIntegrationLogger } from "astro";
 
 export const searchPlugin = (): AstroIntegration => {
   return {

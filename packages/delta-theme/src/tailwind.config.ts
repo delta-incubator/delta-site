@@ -1,6 +1,6 @@
-import type { Config } from "tailwindcss";
 import path from "path";
 import { fileURLToPath } from "url";
+import type { Config } from "tailwindcss";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

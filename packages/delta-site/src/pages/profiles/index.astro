@@ -5,9 +5,9 @@
  * Lists all of the blog authors.
  */
 import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
 import Section from "delta-theme/components/Section.astro";
 import Typography from "delta-theme/components/Typography.astro";
+import Layout from "../../layouts/Layout.astro";
 
 const profiles = await getCollection("profiles");
 

@@ -1,13 +1,13 @@
 ---
 import { site } from "@config/site";
-import Layout from "../../layouts/Layout.astro";
-import ImageStrip from "../../components/ImageStrip.astro";
 import Section from "delta-theme/components/Section.astro";
 import Typography from "delta-theme/components/Typography.astro";
 import {
   fetchChannelPlaylists,
   fetchPlaylistVideos,
 } from "@utils/fetchYoutube";
+import ImageStrip from "../../components/ImageStrip.astro";
+import Layout from "../../layouts/Layout.astro";
 
 const title = "Delta Lake Videos";
 const orderedPlaylistIds = [

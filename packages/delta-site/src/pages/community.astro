@@ -1,4 +1,6 @@
 ---
+import { site } from "@config/site";
+import { fetchChannelVideos } from "@utils/fetchYoutube";
 import Layout from "../layouts/Layout.astro";
 import {
   ArticleVideoSection,
@@ -13,8 +15,6 @@ import AnnouncementSection from "../components/AnnouncementSection.astro";
 import { BookDownloadSection } from "../components/BookDownloadSection";
 import { ContributorsSection } from "../components/ContributorsSection";
 import { ProjectGovernanceSection } from "../components/ProjectGovernanceSection";
-import { site } from "@config/site";
-import { fetchChannelVideos } from "@utils/fetchYoutube";
 
 const { youtubeChannelId } = site;
 const videos = await fetchChannelVideos(youtubeChannelId, { limit: 5 });
