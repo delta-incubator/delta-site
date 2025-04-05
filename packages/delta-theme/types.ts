@@ -1,5 +1,5 @@
 import type { ComponentProps } from "astro/types";
-import Icon from "@theme/components/Icon.astro";
+import Icon from "./components/Icon.astro";
 
 /*
  * Compnoents

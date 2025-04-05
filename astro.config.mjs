@@ -1,6 +1,6 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
-import { deltaTheme, remarkPlugins } from "./lib/delta-theme";
+import { deltaTheme, remarkPlugins } from "delta-theme";
 
 // https://astro.build/config
 export default defineConfig({
