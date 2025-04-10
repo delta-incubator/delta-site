@@ -23,6 +23,22 @@ export default defineConfig({
     "/blog/1": "/blog",
     "/user-stories/1": "/user-stories",
   },
+  /**
+   * Vite SSR Configuration
+   *
+   * The `noExternal` setting is critical when using a workspace-based theme package
+   * that provides Astro integrations and CSS/font dependencies.
+   */
+  vite: {
+    ssr: {
+      noExternal: [
+        "@astrojs/tailwind",
+        "@fontsource-variable/source-code-pro",
+        "@fontsource/source-sans-pro",
+        "astro-favicons",
+      ],
+    },
+  },
   integrations: [
     sitemap(),
     deltaTheme({

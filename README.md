@@ -37,6 +37,28 @@ We mostly follow Astro's [standard project structure](https://docs.astro.build/e
 - `src/pages` - Page routes. Astro uses this directory to generate the page routing structure.
 - `src/utils` - Various utility functions used by different pages, including fetching data from the YouTube Data API.
 
+## Important Configuration Note
+
+When using delta-theme, you need to add these packages to the `vite.ssr.noExternal` configuration in your Astro config:
+
+```js
+export default defineConfig({
+	// ... other config
+	vite: {
+		ssr: {
+			noExternal: [
+				"@astrojs/tailwind",
+				"@fontsource-variable/source-code-pro",
+				"@fontsource/source-sans-pro",
+				"astro-favicons",
+			],
+		},
+	},
+});
+```
+
+This approach allows us to keep these dependencies only in the theme package without duplicating them in your site's package.json.
+
 #### delta-theme
 
 This is the theme source code for delta-site. It includes various plugin configurations, as well as the components used by the site.
