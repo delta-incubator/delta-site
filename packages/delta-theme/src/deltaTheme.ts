@@ -23,13 +23,22 @@ const createFaviconsVirtualPlugin = () => {
     },
     load(id: string) {
       if (id === "\0virtual:favicons-middleware") {
-        return `// Virtual favicons middleware
-export function localizedHTML(locale) { 
-  return ""; 
-}
-export default function(context, next) {
-  return next();
-}`;
+        return `
+          // Virtual implementation of astro-favicons middleware
+          import { defineMiddleware } from "astro:middleware";
+
+          export function localizedHTML(locale) { 
+            return ""; 
+          }
+
+          export const onRequest = defineMiddleware((context, next) => {
+            return next();
+          });
+
+          export default function(context, next) {
+            return next();
+          }
+        `;
       }
     },
   };
