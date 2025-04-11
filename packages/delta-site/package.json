@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "astro": "^5.5.4",
+    "@astrojs/tailwind": "^6.0.1",
     "googleapis": "^144.0.0",
     "delta-theme": "workspace:*"
   },

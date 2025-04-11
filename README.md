@@ -39,26 +39,48 @@ We mostly follow Astro's [standard project structure](https://docs.astro.build/e
 
 ## Important Configuration Note
 
-When using delta-theme, you need to add these packages to the `vite.ssr.noExternal` configuration in your Astro config:
-
-```js
-export default defineConfig({
-	// ... other config
-	vite: {
-		ssr: {
-			noExternal: [
-				"@astrojs/tailwind",
-				"@fontsource-variable/source-code-pro",
-				"@fontsource/source-sans-pro",
-				"astro-favicons",
-			],
-		},
-	},
-});
-```
-
 This approach allows us to keep these dependencies only in the theme package without duplicating them in your site's package.json.
 
 #### delta-theme
 
-This is the theme source code for delta-site. It includes various plugin configurations, as well as the components used by the site.
+Use virtual module:
+
+```js
+ssr: {
+			noExternal: [
+				"@fontsource-variable/source-code-pro",
+				"@fontsource/source-sans-pro",
+			],
+		},
+```
+
+#### Dependency Management
+
+##### Using Virtual Modules
+
+The Delta theme uses virtual modules to handle package dependencies that contain CSS files or other assets that need processing during SSR. This approach ensures theme encapsulation without requiring these dependencies to be duplicated in both the theme and site packages.
+
+**Integration**: These virtual modules are added to the Vite configuration through Astro's integration API:
+
+```js
+const virtualModulesIntegration: AstroIntegration = {
+  name: "delta-virtual-modules-integration",
+  hooks: {
+    "astro:config:setup": ({ updateConfig }) => {
+      updateConfig({
+        vite: {
+          plugins: [createFaviconsVirtualPlugin()],
+          // Configure dependencies that need processing during SSR
+          ssr: {
+            noExternal: [
+              "@fontsource-variable/source-code-pro",
+              "@fontsource/source-sans-pro",
+              "astro-favicons",
+            ],
+          },
+        },
+      });
+    },
+  },
+};
+```
